@@ -8,8 +8,9 @@ pipeline {
 */
     environment {
         registry = "chibykiss/vproappdock"
-        ARTVERSION = "${env.BUILD_ID}"
+        //ARTVERSION = "${env.BUILD_ID}"
         registryCredentials = 'dockerhub'
+        sonarToken = credentials('kube-sonar-token')
     }
 
     stages{
@@ -57,10 +58,12 @@ pipeline {
 
             steps {
                 withSonarQubeEnv('sonar-pro') {
-                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=vprofile-repo \
-                   -Dsonar.projectVersion=1.0 \
+                    sh '''${scannerHome}/bin/sonar-scanner 
+                    -Dsonar.projectKey=vibetek-analysis_kubecicd \
+                   -Dsonar.organization=vibetek-analysis \
                    -Dsonar.sources=src/ \
+                   -Dsonar.host.url=https://sonarcloud.io \
+                    -Dsonar.login=$sonarToken
                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
