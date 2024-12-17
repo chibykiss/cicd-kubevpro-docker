@@ -8,7 +8,6 @@ pipeline {
 */
     environment {
         registry = "chibykiss/vproappdock"
-        //ARTVERSION = "${env.BUILD_ID}"
         registryCredentials = 'dockerhub'
         sonarToken = credentials('kube-sonar-token')
     }
@@ -88,7 +87,7 @@ pipeline {
         stage('UPLOAD IMAGE'){
             steps{
                 script{
-                    docker.withRegistry('registryCredentials'){
+                    docker.withRegistry('',registryCredentials){
                         dockerImage.push("V$BUILD_NUMBER")
                         dockerImage.push('Latest')
                     }
