@@ -65,7 +65,7 @@ pipeline {
                    -Dsonar.organization=vibetek-analysis \
                    -Dsonar.sources=src/ \
                    -Dsonar.host.url=https://sonarcloud.io \
-                   -Dsonar.login=$sonarToken
+                   -Dsonar.login=${sonarToken}
                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
