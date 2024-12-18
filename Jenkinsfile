@@ -2,6 +2,7 @@ pipeline {
 
     agent any
 /*
+    new commit to test the poll scm
 	tools {
         maven "maven3"
     }
