@@ -104,6 +104,9 @@ pipeline {
         stage('KUBERNETES DEPLOY'){
             agent {label 'KOPS'}
             steps{
+                script {
+                    sh "kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -"
+                }
                 sh "helm upgrade --install  --force vprofile-stack helm/vprofilecharts --set appimage=${registry}:V${BUILD_NUMBER} --namespace prod"
             }
         }
